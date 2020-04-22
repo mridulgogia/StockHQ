@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const cors = require('cors');
 
-const passsport = require('passport');
+const passport = require('passport');
 
 const userRoutes = require('./routes/user');
 
@@ -23,8 +23,8 @@ mongoose.connect(process.env.mongoURI,  { useNewUrlParser: true , useCreateIndex
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
-// app.use(passsport.initialize());
-// require('./passportConfig')(passport);
+app.use(passport.initialize());
+require('./passportConfig')(passport);
 
 app.use('/api/auth', userRoutes);
 

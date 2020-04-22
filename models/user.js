@@ -15,10 +15,11 @@ const userSchema = mongoose.Schema({
         type: String,
         required: true,
     },
-    number: {
-        type: String,
-    }, 
     gender: {
+        type: String,
+        required: true
+    },
+    avatar: {
         type: String,
         required: true
     }
