@@ -3,3 +3,9 @@
 .env
 
 yarn.lock
+
+
+# client
+
+/client/node_modules
+/client/yarn.lock
