@@ -7,7 +7,7 @@ exports.actives = (req, res) => {
     .get(`${helperApiUrl}${param}`)
     .then((response) => {
       res.json({
-        data: response.data,
+        data: response.data.mostActiveStock,
       });
     })
     .catch((err) => res.status(500).json({ err: err }));

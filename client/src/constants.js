@@ -1,0 +1,1 @@
+export const FETCH_PROXY = 'http://localhost:5000/api/';

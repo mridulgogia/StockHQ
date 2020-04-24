@@ -1,5 +1,7 @@
 import { combineReducers } from "redux";
 
+import mostActivities from './mostActivitiesReducer';
+
 export default combineReducers({
-    // auth: authReducer,
+    mostActivities: mostActivities
 });
