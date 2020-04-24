@@ -24,10 +24,11 @@ module.exports = (env, options) => {
       rules: [
         {
           test: /\.js?$/,
+          exclude: /node_modules/,
           use: ["babel-loader"],
         },
         {
-          test: /\/scss$/,
+          test: /\.(s*)css$/,
           use: [
             "style-loader",
             {
