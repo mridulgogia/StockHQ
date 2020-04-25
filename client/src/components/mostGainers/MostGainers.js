@@ -1,17 +1,34 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import { fetchMostActivities } from "../../actions/mostActivitiesAction";
+import PropTypes from "prop-types";
+import HomeCarousel from "../common/homeCarousel/HomeCarousel";
 
-class MostActive extends Component {
+class MostGainers extends Component {
   componentDidMount() {
     this.props.fetchMostActivities("GAINERS");
   }
+
   render() {
-    return <div>GAINERS</div>;
+    return (
+      <Fragment>
+        <HomeCarousel
+          title="Most Gainer Stock"
+          data={this.props.mostGainer.data.data}
+        />
+      </Fragment>
+    );
   }
 }
 const mapStateToProps = (state) => {
-  return {};
+  return {
+    mostGainer: state.mostActivities.mostGainer,
+  };
 };
 
-export default connect(mapStateToProps, {fetchMostActivities})(MostActive);
+MostGainers.propTypes = {
+  mostGainer: PropTypes.object.isRequired,
+  fetchMostActivities: PropTypes.func.isRequired,
+};
+
+export default connect(mapStateToProps, { fetchMostActivities })(MostGainers);

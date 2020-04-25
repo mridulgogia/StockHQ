@@ -19,7 +19,7 @@ exports.gainers = (req, res) => {
     .get(`${helperApiUrl}${param}`)
     .then((response) =>
       res.json({
-        data: response.data,
+        data: response.data.mostGainerStock,
       })
     )
     .catch((err) => res.status(500).json({ err: err }));
@@ -31,7 +31,7 @@ exports.losers = (req, res) => {
     .get(`${helperApiUrl}${param}`)
     .then((response) =>
       res.json({
-        data: response.data,
+        data: response.data.mostLoserStock,
       })
     )
     .catch((err) => res.status(500).json({ err: err }));
