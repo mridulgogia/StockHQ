@@ -1,31 +1,17 @@
-import React from "react";
+import React, { Component } from "react";
 import Proptypes from "prop-types";
+import  HomeCarouselItem  from "./HomeCarouselItem";
+import Slider from "react-slick";
 import Card from "react-bootstrap/Card";
+import { Link } from "react-router-dom";
 
 function HomeCarousel({ title, data }) {
   if (data === {} || data === undefined || data === null) {
     return null;
   }
-  const mapping = data.map((item, index) => {
-    console.log(item.changesPercentage)
-    console.log( parseInt(item.changesPercentage))
-    return (
-    <div key={index} className="col-md-2 carousel_item">
-      <Card className="text-center">
-        <Card.Header>{item.companyName}</Card.Header>
-        <Card.Body>
-          <Card.Title>{item.ticker}</Card.Title>
-          <Card.Text>$ {item.price}</Card.Text>
-          <Card.Text
-            className={item.changesPercentage[1] !== "-" ? "positive" : "negative"}
-          >
-            {item.changesPercentage}
-          </Card.Text>
-        </Card.Body>
-      </Card>
-    </div>
-  )});
-
+  const mapping = data.map((item, index) => (
+    <HomeCarouselItem item={item} key={index} />
+  ));
   return (
     <div className="row">
       <div className="col-md-12 carousel_container">
