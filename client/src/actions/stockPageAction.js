@@ -1,8 +1,10 @@
 import axios from "axios";
-import { FETCH_PROXY } from "../constants";
+
+export const FETCHED_INFO_META = "FETCHED_INFO_META";
+
+export const FETCHED_INFO_QUOTE = "FETCHED_INFO_QUOTE";
 
 export const FETCHING_INFO = "FETCHING_INFO";
-export const FETCHED_INFO = "FETCHED_INFO";
 export const ERROR_INFO = "ERROR_INFO";
 
 export const fetchStockInfo = (stockName) => (dispatch) => {
@@ -13,7 +15,7 @@ export const fetchStockInfo = (stockName) => (dispatch) => {
     .then((res) => {
       if (res.status === 200) {
         dispatch({
-          type: FETCHED_INFO,
+          type: FETCHED_INFO_META,
           payload: res.data.data.profile,
         });
       } else {
@@ -29,4 +31,27 @@ export const fetchStockInfo = (stockName) => (dispatch) => {
         payload: err,
       });
     });
+    dispatch({
+      type: FETCHING_INFO
+    })
+  axios("/api/company/quote/" + stockName)
+    .then((res) => {
+      if (res.status === 200) {
+        dispatch({
+          type: FETCHED_INFO_QUOTE,
+          payload: res.data,
+        });
+      } else {
+        dispatch({
+          type: ERROR_INFO,
+          payload: res.data,
+        });
+      }
+    })
+    .catch((err) =>
+      dispatch({
+        type: ERROR_INFO,
+        payload: err,
+      })
+    );
 };
