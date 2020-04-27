@@ -28,3 +28,11 @@ exports.currentPrice = (req, res) => {
     .then((response) => res.json({ data: response.data }))
     .catch((err) => res.status(500).json({ err }));
 };
+
+exports.quote = (req, res) => {
+  const param = `quote/${req.params.id}`;
+  axios
+    .get(`${helperApiUrl}${param}`)
+    .then((response) => res.json({ data: response.data }))
+    .catch((err) => res.status(500).json({ err: err }));
+};
