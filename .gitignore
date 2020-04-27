@@ -7,5 +7,7 @@ yarn.lock
 
 # client
 
-/client/node_modules
-/client/yarn.lock
+# /client/node_modules
+# /client/yarn.lock
+
+/client1/

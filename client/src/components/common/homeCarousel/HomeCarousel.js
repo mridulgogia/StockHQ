@@ -22,9 +22,9 @@ function HomeCarousel({ title, data }) {
   );
 }
 
-HomeCarousel.proptypes = {
-  title: Proptypes.string.isRequired,
-  data: Proptypes.array.isRequired,
-};
+// HomeCarousel.proptypes = {
+//   title: Proptypes.string.isRequired,
+//   data: Proptypes.array.isRequired,
+// };
 
 export default HomeCarousel;
