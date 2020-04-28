@@ -1,0 +1,18 @@
+.nav_link-text {
+  color: rgba(255, 248, 248, 0.8) !important;
+  cursor: pointer;
+  display: inline-block;
+  &:hover {
+    color: rgba(256, 256, 256, 1) !important;
+    // color: red !important;
+  }
+}
+.mr-auto {
+  margin-right: 0;
+  //   padding-right: 0;
+  width: 100%;
+}
+
+.dummy-div {
+  width: 60%;
+}
