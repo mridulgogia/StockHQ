@@ -1,13 +1,22 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { fetchStockInfo } from "../../actions/stockPageAction";
+import {
+  fetchStockInfo,
+  fetchHistoricalCharts,
+} from "../../actions/stockPageAction";
 import Table from "react-bootstrap/Table";
 import { Link } from "react-router-dom";
+
+import CompanyChart from "../common/chart/CompanyChart";
 
 class StockPage extends Component {
   componentDidMount() {
     this.props.fetchStockInfo(this.props.location.pathname);
+    this.props.fetchHistoricalCharts(
+      this.props.duration,
+      this.props.location.pathname
+    );
   }
   render() {
     const { info } = this.props;
@@ -49,23 +58,35 @@ class StockPage extends Component {
                 <div className="row">
                   <div className="col-md-12 meta_tag-container">
                     <div className="row">
-                      <div className="col-md-6 meta-tag">Price: ${info.price}</div>
-                      <div className="col-md-6 meta-tag">Market Cap: {info.mktCap}</div>
+                      <div className="col-md-6 meta-tag">
+                        Price: ${info.price}
+                      </div>
+                      <div className="col-md-6 meta-tag">
+                        Market Cap: {info.mktCap}
+                      </div>
                     </div>
                     <div className="row">
-                      <div className="col-md-6 meta-tag">Exchange: {info.exchange}</div>
-                      <div className="col-md-6 meta-tag">Industry: {info.industry}</div>
+                      <div className="col-md-6 meta-tag">
+                        Exchange: {info.exchange}
+                      </div>
+                      <div className="col-md-6 meta-tag">
+                        Industry: {info.industry}
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
             <div className="row">
-              <div className="col-md-12 info_description">{info.description}</div>
+              <div className="col-md-12 info_description">
+                <CompanyChart 
+                  data={this.props.historicalChart.data}
+              />
+              </div>
             </div>
 
-            <div className="row">
-              <div className="col-md-6 table-container">
+            <div className="row row-wrapper">
+              <div className="col-md-6 col-wrapper table-container">
                 <Table>
                   <tbody>
                     <tr>
@@ -103,6 +124,9 @@ class StockPage extends Component {
                   </tbody>
                 </Table>
               </div>
+              <div className="col-md-6 col-wrapper0">
+                <div className="info_description">{info.description}</div>
+              </div>
             </div>
           </div>
         </div>
@@ -116,6 +140,8 @@ StockPage.propTypes = {
   info: PropTypes.object.isRequired,
   isLoading: PropTypes.bool.isRequired,
   quote: PropTypes.object.isRequired,
+  historicalChart: PropTypes.object.isRequired,
+  duration: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => {
@@ -123,7 +149,12 @@ const mapStateToProps = (state) => {
     info: state.stockPageInfo.info,
     isLoading: state.stockPageInfo.isLoading,
     quote: state.stockPageInfo.quote,
+    duration: state.stockPageInfo.duration,
+    historicalChart: state.stockPageInfo.historicalChart,
   };
 };
 
-export default connect(mapStateToProps, { fetchStockInfo })(StockPage);
+export default connect(mapStateToProps, {
+  fetchStockInfo,
+  fetchHistoricalCharts,
+})(StockPage);

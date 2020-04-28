@@ -36,3 +36,13 @@ exports.quote = (req, res) => {
     .then((response) => res.json({ data: response.data }))
     .catch((err) => res.status(500).json({ err: err }));
 };
+
+exports.historicalChart = (req, res) => {
+  const { duration, id } = req.params;
+  const param = `historical-chart/${duration}/${id}`;
+
+  axios
+    .get(helperApiUrl + param)
+    .then((response) => res.json({ data: response.data }))
+    .catch((err) => res.status(500).json({ err }));
+};

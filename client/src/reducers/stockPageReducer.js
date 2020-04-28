@@ -3,6 +3,9 @@ import {
   ERROR_INFO,
   FETCHED_INFO_META,
   FETCHED_INFO_QUOTE,
+  FETCHING_HISTORICAL_CHART,
+  FETCHED_HISTORICAL_CHART,
+  ERROR_HISTORICAL_CHART,
 } from "../actions/stockPageAction";
 
 export default function stockPageInfo(
@@ -10,6 +13,12 @@ export default function stockPageInfo(
     isLoading: false,
     info: {},
     quote: {},
+    historicalChart: {
+      isLoading: false,
+      data: {},
+      error: null,
+    },
+    duration: "15min",
     error: null,
   },
   action
@@ -44,6 +53,36 @@ export default function stockPageInfo(
         quote: action.payload,
       };
       return state;
+    case FETCHING_HISTORICAL_CHART:
+      state = {
+        ...state,
+        historicalChart: {
+          ...state.historicalChart,
+          isLoading: true,
+        },
+      };
+      return state;
+    case FETCHED_HISTORICAL_CHART:
+      state = {
+        ...state,
+        historicalChart: {
+          ...state.historicalChart,
+          isLoading: false,
+          data: action.payload,
+        },
+      };
+      return state;
+    case ERROR_HISTORICAL_CHART:
+      state = {
+        ...state,
+        historicalChart: {
+          ...state.historicalChart,
+          isLoading: false,
+          error: action.payload,
+        },
+      };
+      return state;
+
     default:
       return state;
   }
