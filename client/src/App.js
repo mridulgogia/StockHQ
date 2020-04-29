@@ -9,7 +9,7 @@ import store from "./store";
 import "./styles/_index.scss";
 
 import Routes from "./routes";
-import { Header } from "./components/header/Header";
+import  Header  from "./components/header/Header";
 import setAuthToken from "./utils/setAuthToken";
 import { setCurrentUser } from "./actions/authAction"
 

@@ -2,10 +2,12 @@ import React, { Component } from "react";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import NavDropdown from "react-bootstrap/NavDropdown";
-// import {Link} from "react-router-dom";
+import {Link} from "react-router-dom";
+import { connect } from "react-redux";
+
 import AuthModal from "../common/authModal/AuthModal";
 
-export class Header extends Component {
+class Header extends Component {
   constructor(props) {
     super(props);
 
@@ -15,7 +17,7 @@ export class Header extends Component {
       authModalState: false,
     };
 
-    this.onClose= this.onClose.bind(this);
+    this.onClose = this.onClose.bind(this);
     this.onSetModalState = this.onSetModalState.bind(this);
     this.openAuthModal = this.openAuthModal.bind(this);
   }
@@ -23,8 +25,8 @@ export class Header extends Component {
   openAuthModal(route) {
     this.setState({
       route: route,
-      authModalState: true
-    })
+      authModalState: true,
+    });
   }
 
   onClose() {
@@ -39,13 +41,39 @@ export class Header extends Component {
     }));
   }
 
-  setModalRoute(route){
+  setModalRoute(route) {
     this.setState({
       route: route,
-      // title: route === "LOGIN" ? "Login" : "Register"
-    })
+    });
   }
   render() {
+    const authLinks = (
+      <div className="float-right">
+        <Link className="nav-link nav_link-text" to="/profile">
+          Profile
+        </Link>
+        <div className="nav-link nav_link-text">Logout</div>
+      </div>
+    );
+
+    const guestLinks = (
+      <div className="float-right">
+        <div
+          className="nav-link nav_link-text"
+          onClick={() => this.openAuthModal("REGISTER")}
+        >
+          Signup
+        </div>
+        <div
+          className="nav-link nav_link-text"
+          onClick={() => this.openAuthModal("LOGIN")}
+        >
+          Login
+        </div>
+      </div>
+    );
+
+    const {isAuthenticated} = this.props;
     return (
       <Navbar bg="dark" expand="lg">
         <Navbar.Brand href="#home">StockHQ</Navbar.Brand>
@@ -66,19 +94,10 @@ export class Header extends Component {
               </NavDropdown.Item>
             </NavDropdown>
             <div className="dummy-div"></div>
-            <div className="float-right">
-              <div 
-                className="nav-link nav_link-text"
-                onClick={() => this.openAuthModal("REGISTER")}
-              >Signup</div>
-              <div 
-                className="nav-link nav_link-text"
-                onClick={() => this.openAuthModal("LOGIN")}              
-              >Login</div>
-            </div>
+        {isAuthenticated? authLinks : guestLinks}
           </Nav>
         </Navbar.Collapse>
-        <AuthModal 
+        <AuthModal
           show={this.state.authModalState}
           onHide={this.onClose}
           route={this.state.route}
@@ -87,3 +106,9 @@ export class Header extends Component {
     );
   }
 }
+
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+});
+
+export default connect(mapStateToProps, {})(Header);

@@ -1,10 +1,10 @@
 import { combineReducers } from "redux";
 
-import authReducer from "./authReducer";
+import auth from "./authReducer";
 import mostActivities from "./mostActivitiesReducer";
 import stockPageInfo from "./stockPageReducer";
 export default combineReducers({
-  authReducer: authReducer,
+  authReducer: auth,
   mostActivities: mostActivities,
   stockPageInfo: stockPageInfo,
 });

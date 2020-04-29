@@ -28,7 +28,6 @@ class AuthModal extends Component {
 
   onChangeLogin(event) {
     const { name, value } = event.target;
-    console.log("pathname", this.props.history.location.pathname);
     this.setState({
       [name]: value,
     });
@@ -153,7 +152,6 @@ class AuthModal extends Component {
       </Form>
     );
     const title = this.props.route === "LOGIN" ? "Login" : "Register";
-    // console.log("props", this.props)
     return (
       <Modal {...this.props} size="lg" aria-labelledby="auth modal" centered>
         <Modal.Header closeButton>

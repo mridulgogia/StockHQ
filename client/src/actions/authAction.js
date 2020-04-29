@@ -12,7 +12,6 @@ export const REQUEST_ERROR_LOGIN = "REQUEST_ERROR_LOGIN";
 
 export const requestLogin = (postObj, onClose) => (dispatch) => {
   dispatch({ type: REQUEST_INIT_LOGIN });
-  console.log("onClose", onClose)
   let error = {};
 
   if (

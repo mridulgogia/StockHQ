@@ -8,7 +8,7 @@ import {
 } from "../actions/authAction";
 import isEmpty from "../validation/isEmpty";
 
-export default function authReducer(
+export default function auth(
   state = {
     isLoading: false,
     isAuthenticated: false,
