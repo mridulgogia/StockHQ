@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import { withRouter } from "react-router-dom";
 import { requestLogin, requestRegister } from "../../../actions/authAction";
 
 class AuthModal extends Component {
@@ -14,20 +15,20 @@ class AuthModal extends Component {
       loginPassword: "",
       registerEmail: "",
       registerName: "",
-      registerGender: "",
+      registerGender: "male",
       registerPassword: "",
       registerCPassword: "",
     };
 
     this.onChangeLogin = this.onChangeLogin.bind(this);
     this.onChangeRegister = this.onChangeRegister.bind(this);
-    this.onClickLogin = this.onClickLogin.bind(this);
-    this.onClickRegister = this.onClickRegister.bind(this);
+    this.onSubmitLogin = this.onSubmitLogin.bind(this);
+    this.onSubmitRegister = this.onSubmitRegister.bind(this);
   }
 
   onChangeLogin(event) {
     const { name, value } = event.target;
-
+    console.log("pathname", this.props.history.location.pathname);
     this.setState({
       [name]: value,
     });
@@ -35,33 +36,31 @@ class AuthModal extends Component {
 
   onChangeRegister(event) {
     const { name, value } = event.target;
-    console.log(name, value)
     this.setState({
       [name]: value,
     });
   }
 
-  onClickLogin(event) {
+  onSubmitLogin(event) {
     event.preventDefault();
     const requestObj = {
       email: this.state.loginEmail,
       password: this.state.loginPassword,
     };
 
-    this.props.requestLogin(requestObj);
+    this.props.requestLogin(requestObj, this.props.onHide);
   }
 
-  onClickRegister(event) {
+  onSubmitRegister(event) {
     event.preventDefault();
     const requestObj = {
       email: this.state.registerEmail,
       name: this.state.registerName,
       gender: this.state.registerGender,
       password: this.state.registerPassword,
-      cPassword: this.state.registerCPassword
+      cPassword: this.state.registerCPassword,
     };
-    this.props.requestRegister(requestObj);
-
+    this.props.requestRegister(requestObj, this.props.onHide);
   }
 
   render() {
@@ -88,7 +87,7 @@ class AuthModal extends Component {
           />
         </Form.Group>
 
-        <Button type="submit" onClick={this.onClickLogin}>
+        <Button type="submit" onClick={this.onSubmitLogin}>
           Login
         </Button>
       </Form>
@@ -148,13 +147,13 @@ class AuthModal extends Component {
           </Form.Control>
         </Form.Group>
 
-        <Button 
-          type="submit"
-          onClick={this.onClickRegister}  
-        >Register</Button>
+        <Button type="submit" onClick={this.onSubmitRegister}>
+          Register
+        </Button>
       </Form>
     );
     const title = this.props.route === "LOGIN" ? "Login" : "Register";
+    // console.log("props", this.props)
     return (
       <Modal {...this.props} size="lg" aria-labelledby="auth modal" centered>
         <Modal.Header closeButton>
@@ -176,4 +175,6 @@ class AuthModal extends Component {
 
 const mapStateToProps = (state) => ({});
 
-export default connect(mapStateToProps, { requestLogin, requestRegister })(AuthModal);
+export default connect(mapStateToProps, { requestLogin, requestRegister })(
+  withRouter(AuthModal)
+);

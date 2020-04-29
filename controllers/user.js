@@ -4,11 +4,17 @@ const jwt = require("jsonwebtoken");
 const gravatar = require("gravatar");
 require("dotenv").config();
 
+const validateSignupInput = require("../validations/signup");
+const validateLoginInput = require("../validations/login");
+
 const secretKey = process.env.secretKey;
 
 // const passport = require("passport");
 exports.signup = (req, res) => {
-  let errors = {};
+
+  const {errors, isValid} = validateSignupInput(req.body);
+  if(!isValid) return res.status(400).json(errors);
+
   const { email, password, name, gender } = req.body;
 
   SUser.findOne({
@@ -70,8 +76,8 @@ exports.signup = (req, res) => {
 };
 
 exports.login = (req, res) => {
-//   const { errors, isValid } = validateLoginInput(req.body);
-//   if (!isValid) return res.status(400).json(errors);
+  //   const { errors, isValid } = validateLoginInput(req.body);
+  //   if (!isValid) return res.status(400).json(errors);
 
   const { email, password } = req.body;
 
