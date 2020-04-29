@@ -52,6 +52,7 @@ exports.signup = (req, res) => {
                 name: user.id,
                 email: user.email,
                 avatar: user.avatar,
+                isVerified: false
               };
 
               jwt.sign(
@@ -95,6 +96,7 @@ exports.login = (req, res) => {
           name: user.name,
           email: user.email,
           avatar: user.avatar,
+          isVerified: isEmpty(user.mobile)
         };
 
         jwt.sign(

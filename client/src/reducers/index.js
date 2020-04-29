@@ -4,7 +4,7 @@ import auth from "./authReducer";
 import mostActivities from "./mostActivitiesReducer";
 import stockPageInfo from "./stockPageReducer";
 export default combineReducers({
-  authReducer: auth,
+  auth: auth,
   mostActivities: mostActivities,
   stockPageInfo: stockPageInfo,
 });
