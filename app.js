@@ -10,7 +10,8 @@ const passport = require("passport");
 const userRoutes = require("./routes/user");
 const stockRoutes = require("./routes/stock");
 const companyRoutes = require("./routes/company");
-
+// const followRoutes = require("./routes/followStock");
+const followRoutes = require('./routes/followStock');
 require("dotenv").config();
 
 app.use(cors());
@@ -35,5 +36,6 @@ require("./passportConfig")(passport);
 app.use("/api/auth", userRoutes);
 app.use("/api/stock", stockRoutes);
 app.use("/api/company", companyRoutes);
+app.use("/api/follow", followRoutes);
 
 module.exports = app;

@@ -9,11 +9,12 @@ const validateLoginInput = require("../validations/login");
 
 const secretKey = process.env.secretKey;
 
+const isEmpty = require("../validations/isEmpty");
+
 // const passport = require("passport");
 exports.signup = (req, res) => {
-
-  const {errors, isValid} = validateSignupInput(req.body);
-  if(!isValid) return res.status(400).json(errors);
+  const { errors, isValid } = validateSignupInput(req.body);
+  if (!isValid) return res.status(400).json(errors);
 
   const { email, password, name, gender } = req.body;
 
@@ -52,7 +53,7 @@ exports.signup = (req, res) => {
                 name: user.id,
                 email: user.email,
                 avatar: user.avatar,
-                isVerified: false
+                isVerified: false,
               };
 
               jwt.sign(
@@ -96,7 +97,7 @@ exports.login = (req, res) => {
           name: user.name,
           email: user.email,
           avatar: user.avatar,
-          isVerified: isEmpty(user.mobile)
+          isVerified: isEmpty(user.mobile),
         };
 
         jwt.sign(
