@@ -34,23 +34,27 @@ export const fetchFollowState = (pathname) => (dispatch) => {
     );
 };
 
+export const followStock = (pathname) => (dispatch) => {
+  const stockName = pathname.split("/")[2];
+
+  axios
+    .get("/api/follow/followStock/" + stockName)
+    .then((res) =>
+      dispatch({
+        type: FETCHED_FOLLOW_STATE,
+        payload: res.data.isFollowed,
+      })
+    )
+    .catch((err) =>
+      dispatch({
+        type: ERROR_FOLLOW_STATE,
+        payload: false,
+      })
+    );
+};
+
 export const cleanIsFollowed = () => (dispatch) =>
   dispatch({
     type: FETCHED_FOLLOW_STATE,
     payload: false,
   });
-
-
-  export const followStock = pathname => dispatch => {
-    const stockName = pathname.split("/")[2];
-
-    axios.get("/api/follow/followStock"+ stockName)
-      .then(res => dispatch({
-        type: FETCHED_FOLLOW_STATE,
-        payload: res.data.isFollowed
-      }))
-      .catch(err => dispatch({
-        type: ERROR_FOLLOW_STATE,
-        payload: false
-      }))
-  }

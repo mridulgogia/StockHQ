@@ -12,7 +12,7 @@ import Routes from "./routes";
 import  Header  from "./components/header/Header";
 import setAuthToken from "./utils/setAuthToken";
 import { setCurrentUser } from "./actions/authAction"
-import Modals from "./components/common/popovers";
+import Modals from "./components/common/modals";
 
 class App extends React.Component {
   componentDidMount() {

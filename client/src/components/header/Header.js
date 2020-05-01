@@ -6,6 +6,7 @@ import {Link} from "react-router-dom";
 import { connect } from "react-redux";
 
 import AuthModal from "../authModal/AuthModal";
+import { logoutUser } from "../../actions/authAction";
 
 class Header extends Component {
   constructor(props) {
@@ -52,7 +53,10 @@ class Header extends Component {
         <Link className="nav-link nav_link-text" to="/profile">
           Profile
         </Link>
-        <div className="nav-link nav_link-text">Logout</div>
+        <div 
+          className="nav-link nav_link-text"
+          onClick={this.props.logoutUser}
+        >Logout</div>
       </div>
     );
 
@@ -111,4 +115,4 @@ const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
 });
 
-export default connect(mapStateToProps, {})(Header);
+export default connect(mapStateToProps, {logoutUser})(Header);

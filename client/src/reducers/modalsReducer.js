@@ -9,7 +9,7 @@ import {
 
 export default function modals(
   state = {
-    verifyModal: true,
+    verifyModal: false,
     successModal: false,
     failedModal: false,
   },
@@ -23,16 +23,16 @@ export default function modals(
       state = { ...state, successModal: false };
       return state;
     case ACTIVATE_FAILED_MODAL:
-      state = { ...state, FailedModal: true };
+      state = { ...state, failedModal: true };
       return state;
     case DEACTIVATE_FAILED_MODAL:
-      state = { ...state, FailedModal: false };
+      state = { ...state, failedModal: false };
       return state;
     case ACTIVATE_VERIFY_MODAL:
-      state = { ...state, VerifyModal: true };
+      state = { ...state, verifyModal: true };
       return state;
     case DEACTIVATE_VERIFY_MODAL:
-      state = { ...state, VerifyModal: false };
+      state = { ...state, verifyModal: false };
       return state;
     default:
       return state;

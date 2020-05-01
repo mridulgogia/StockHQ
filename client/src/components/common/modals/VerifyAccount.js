@@ -8,12 +8,14 @@ class VerifyAccount extends Component {
         {...this.props}
         autoFocus={false}
         animation={false}
-        className="custom_modal verify_modal"
+        className="custom_modal"
       >
-        <Modal.Body>Please verify your account</Modal.Body>
+        <Modal.Body className="verify_modal">
+          Please verify your account
+        </Modal.Body>
       </Modal>
     );
   }
 }
 
-export default VerifyAccount
+export default VerifyAccount;

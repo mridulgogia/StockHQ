@@ -117,3 +117,10 @@ export const requestRegister = (postObj, onClose) => (dispatch) => {
       });
     });
 };
+
+export const logoutUser = () => (dispatch) => {
+  localStorage.removeItem("jwtToken");
+  setAuthToken(false);
+
+  dispatch(setCurrentUser({}));
+};

@@ -17,7 +17,7 @@ class FollowWidget extends Component {
     this.onClose = this.onClose.bind(this);
     this.onSetModalState = this.onSetModalState.bind(this);
     this.openAuthModal = this.openAuthModal.bind(this);
-    this.followStock = this.followStock.bind(this);
+    // this.followStock = this.followStock.bind(this);
   }
 
   componentDidMount() {
@@ -92,4 +92,5 @@ export default connect(mapStateToProps, {
   fetchFollowState,
   cleanIsFollowed,
   displayVerifyModal,
+  followStock
 })(FollowWidget);

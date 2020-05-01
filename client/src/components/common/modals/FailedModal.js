@@ -1,19 +1,19 @@
 import React, { Component } from "react";
 import Modal from "react-bootstrap/Modal";
 
-class SuccessModal extends Component {
+class FailedModal extends Component {
   render() {
     return (
       <Modal
         {...this.props}
         autoFocus={false}
         animation={false}
-        className="custom_modal succes_modal"
+        className="custom_modal failed_modal"
       >
-        <Modal.Body>Please verify your account</Modal.Body>
+        <Modal.Body className="failed_modal">Failed</Modal.Body>
       </Modal>
     );
   }
 }
 
-export default SuccessModal
+export default FailedModal;

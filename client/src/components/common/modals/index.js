@@ -27,7 +27,7 @@ class Modals extends Component {
 }
 
 const mapStateToProps = state => ({
-  verifyModalState: state.modals.verifyModalState,
+  verifyModalState: state.modals.verifyModal,
   successModal: state.modals.successModal,
   failedModal: state.modals.failedModal
 })

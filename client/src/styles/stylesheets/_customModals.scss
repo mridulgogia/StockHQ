@@ -1,0 +1,32 @@
+.custom_modal {
+  > .modal-dialog {
+    position: absolute;
+    bottom: 15px;
+    right: 70px;
+    border-radius: 50px;
+
+    > .modal-content {
+      border-radius: 50px;
+
+      > .modal-body {
+        border-radius: 50px;
+        color: #fff;
+      }
+    }
+  }
+}
+
+.success_modal {
+  background-color: #218838;
+  border-color: #1e7e34;
+}
+
+.failed_modal {
+  background-color: #c82333;
+  border-color: #bd2130;
+}
+
+.verify_modal {
+  background-color: #0069d9;
+  border-color: #0062cc;
+}
