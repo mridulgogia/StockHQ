@@ -7,6 +7,10 @@ import {
   FETCHED_HISTORICAL_CHART,
   ERROR_HISTORICAL_CHART,
 } from "../actions/stockPageAction";
+import {
+  FETCHED_FOLLOW_STATE,
+  ERROR_FOLLOW_STATE,
+} from "../actions/followWidgetAction";
 
 export default function stockPageInfo(
   state = {
@@ -20,6 +24,7 @@ export default function stockPageInfo(
     },
     duration: "15min",
     error: null,
+    isFollowed: false,
   },
   action
 ) {
@@ -82,7 +87,18 @@ export default function stockPageInfo(
         },
       };
       return state;
-
+    case FETCHED_FOLLOW_STATE:
+      state = {
+        ...state,
+        isFollowed: action.payload,
+      };
+      return state;
+    case ERROR_FOLLOW_STATE:
+      state = {
+        ...state,
+        isFollowed: false,
+      };
+      return state;
     default:
       return state;
   }

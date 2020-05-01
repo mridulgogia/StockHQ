@@ -1,6 +1,10 @@
 import axios from "axios";
 import setAuthToken from "../utils/setAuthToken";
 import jwt_decode from "jwt-decode";
+import {
+  displaySuccessModalAction,
+  displayFailedModalAction,
+} from "./modalsActions";
 
 export const REQUEST_INIT_REGISTER = "REQUEST_INIT_REGISTER";
 export const REQUEST_COMPLETED_REGISTER = "REQUEST_COMPLETED_REGISTER";
@@ -34,14 +38,16 @@ export const requestLogin = (postObj, onClose) => (dispatch) => {
       setAuthToken(token);
       const decoded = jwt_decode(token);
       onClose();
+      displaySuccessModalAction(dispatch);
       dispatch(setCurrentUser(decoded));
     })
-    .catch((err) =>
+    .catch((err) => {
+      displayFailedModalAction(dispatch);
       dispatch({
         type: REQUEST_ERROR_LOGIN,
         payload: err,
-      })
-    );
+      });
+    });
 };
 
 export const setCurrentUser = (decoded) => {
@@ -97,16 +103,17 @@ export const requestRegister = (postObj, onClose) => (dispatch) => {
       setAuthToken(token);
       const decoded = jwt_decode(token);
       onClose();
+      displaySuccessModalAction(dispatch);
       dispatch({
         type: REQUEST_COMPLETED_REGISTER,
         payload: decoded,
       });
-      // history.push(history.location.pathname);
     })
-    .catch((err) =>
+    .catch((err) => {
+      displayFailedModalAction(dispatch);
       dispatch({
         type: REQUEST_ERROR_REGISTER,
         payload: err.response.data,
-      })
-    );
+      });
+    });
 };
