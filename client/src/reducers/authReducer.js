@@ -12,6 +12,7 @@ export default function auth(
   state = {
     isLoading: false,
     isAuthenticated: false,
+    isVerified: false,
     user: {},
     error: null,
   },
@@ -53,6 +54,7 @@ export default function auth(
         isLoading: false,
         user: action.payload,
         isAuthenticated: !isEmpty(action.payload),
+        isVerified: action.payload.isVerified
       };
       return state;
     case REQUEST_ERROR_LOGIN:

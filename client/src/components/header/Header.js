@@ -5,7 +5,7 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 import {Link} from "react-router-dom";
 import { connect } from "react-redux";
 
-import AuthModal from "../common/authModal/AuthModal";
+import AuthModal from "../authModal/AuthModal";
 
 class Header extends Component {
   constructor(props) {

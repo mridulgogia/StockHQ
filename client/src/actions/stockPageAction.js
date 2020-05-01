@@ -16,7 +16,7 @@ export const fetchStockInfo = (stockName) => (dispatch) => {
   dispatch({ type: FETCHING_INFO });
   stockName = stockName.split("/")[2];
 
-  axios("/api/company/profile/" + stockName)
+  axios.get("/api/company/profile/" + stockName)
     .then((res) => {
       if (res.status === 200) {
         dispatch({

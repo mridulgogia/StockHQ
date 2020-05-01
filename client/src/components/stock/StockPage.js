@@ -9,6 +9,7 @@ import Table from "react-bootstrap/Table";
 import { Link } from "react-router-dom";
 
 import CompanyChart from "../common/chart/CompanyChart";
+import FollowWidget from "../widget/FollowWidget";
 
 class StockPage extends Component {
   componentDidMount() {
@@ -79,9 +80,7 @@ class StockPage extends Component {
             </div>
             <div className="row">
               <div className="col-md-12 info_description">
-                <CompanyChart 
-                  data={this.props.historicalChart.data}
-              />
+                <CompanyChart data={this.props.historicalChart.data} />
               </div>
             </div>
 
@@ -125,7 +124,23 @@ class StockPage extends Component {
                 </Table>
               </div>
               <div className="col-md-6 col-wrapper0">
-                <div className="info_description">{info.description}</div>
+                <div className="row">
+                  <div className="col-md-12">
+                    {/* <div className="info_description">{info.description}</div> */}
+                    <div className="row">
+                      <div className="col-md-12">
+                        <div className="info_description">
+                          {info.description}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="row">
+                      <div className="col-md-12">
+                        <FollowWidget title={info.companyName} pathname={this.props.location.pathname}/>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

@@ -5,7 +5,7 @@ import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { withRouter } from "react-router-dom";
-import { requestLogin, requestRegister } from "../../../actions/authAction";
+import { requestLogin, requestRegister } from "../../actions/authAction";
 
 class AuthModal extends Component {
   constructor() {
