@@ -11,7 +11,6 @@ const secretKey = process.env.secretKey;
 
 const isEmpty = require("../validations/isEmpty");
 
-// const passport = require("passport");
 exports.signup = (req, res) => {
   const { errors, isValid } = validateSignupInput(req.body);
   if (!isValid) return res.status(400).json(errors);
@@ -78,8 +77,8 @@ exports.signup = (req, res) => {
 };
 
 exports.login = (req, res) => {
-  //   const { errors, isValid } = validateLoginInput(req.body);
-  //   if (!isValid) return res.status(400).json(errors);
+    const { errors, isValid } = validateLoginInput(req.body);
+    if (!isValid) return res.status(400).json(errors);
 
   const { email, password } = req.body;
 
@@ -115,7 +114,7 @@ exports.login = (req, res) => {
         );
       } else {
         errors.password = "Password incorrect";
-        res.status(400).json({ errors });
+        res.status(400).json( errors );
       }
     });
   });

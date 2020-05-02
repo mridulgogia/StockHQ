@@ -14,7 +14,7 @@ export default function auth(
     isAuthenticated: false,
     isVerified: false,
     user: {},
-    error: null,
+    error: {},
   },
   action
 ) {
@@ -23,7 +23,7 @@ export default function auth(
       state = {
         ...state,
         isLoading: true,
-        error: null,
+        error: {},
       };
       return state;
     case REQUEST_COMPLETED_REGISTER:
@@ -45,7 +45,7 @@ export default function auth(
       state = {
         ...state,
         isLoading: true,
-        error: null,
+        error: {},
       };
       return state;
     case REQUEST_COMPLETED_LOGIN:

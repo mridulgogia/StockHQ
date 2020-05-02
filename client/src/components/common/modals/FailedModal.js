@@ -8,7 +8,7 @@ class FailedModal extends Component {
         {...this.props}
         autoFocus={false}
         animation={false}
-        className="custom_modal failed_modal"
+        className="custom_modal"
       >
         <Modal.Body className="failed_modal">Failed</Modal.Body>
       </Modal>

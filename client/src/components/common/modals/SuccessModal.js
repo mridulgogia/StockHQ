@@ -8,7 +8,7 @@ class SuccessModal extends Component {
         {...this.props}
         autoFocus={false}
         animation={false}
-        className="custom_modal succes_modal"
+        className="custom_modal"
       >
         <Modal.Body className="success_modal">Success</Modal.Body>
       </Modal>

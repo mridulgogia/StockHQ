@@ -6,6 +6,8 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { withRouter } from "react-router-dom";
 import { requestLogin, requestRegister } from "../../actions/authAction";
+import FormGroup from "../common/inputs/FormGroup";
+import SelectListGroup from "../common/inputs/SelectListGroup";
 
 class AuthModal extends Component {
   constructor() {
@@ -18,12 +20,21 @@ class AuthModal extends Component {
       registerGender: "male",
       registerPassword: "",
       registerCPassword: "",
+      errors: {},
     };
 
     this.onChangeLogin = this.onChangeLogin.bind(this);
     this.onChangeRegister = this.onChangeRegister.bind(this);
     this.onSubmitLogin = this.onSubmitLogin.bind(this);
     this.onSubmitRegister = this.onSubmitRegister.bind(this);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.errors) {
+      this.setState({
+        errors: nextProps.errors,
+      });
+    }
   }
 
   onChangeLogin(event) {
@@ -57,94 +68,95 @@ class AuthModal extends Component {
       name: this.state.registerName,
       gender: this.state.registerGender,
       password: this.state.registerPassword,
-      cPassword: this.state.registerCPassword,
+      password2: this.state.registerCPassword,
     };
     this.props.requestRegister(requestObj, this.props.onHide);
   }
 
   render() {
     const loginForm = (
-      <Form>
-        <Form.Group controlId="email">
-          <Form.Label>Email address</Form.Label>
-          <Form.Control
-            type="email"
-            placeholder="name@example.com"
-            name="loginEmail"
-            value={this.state.loginEmail}
-            onChange={this.onChangeLogin}
-          />
-        </Form.Group>
-        <Form.Group controlId="password">
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            type="password"
-            placeholder="password"
-            name="loginPassword"
-            value={this.state.loginPassword}
-            onChange={this.onChangeLogin}
-          />
-        </Form.Group>
-
-        <Button type="submit" onClick={this.onSubmitLogin}>
-          Login
-        </Button>
+      <Form onSubmit={this.onSubmitLogin}>
+        <FormGroup
+          label="Email Address"
+          type="email"
+          placeholder="name@email.com"
+          name="loginEmail"
+          value={this.state.loginEmail}
+          onChange={this.onChangeLogin}
+          error={this.state.errors.email}
+        />
+        <FormGroup
+          name="loginPassword"
+          value={this.state.loginPassword}
+          type="text"
+          label="Password"
+          onChange={this.onChangeLogin}
+          error={this.state.errors.password}
+          placeholder="password"
+        />
+        <Button type="submit">Login</Button>
       </Form>
     );
 
+    const options = [
+      {
+        label: "Male",
+        value: "male",
+      },
+      {
+        label: "Female",
+        value: "female",
+      },
+    ];
+
     const registerForm = (
       <Form>
-        <Form.Group controlId="name">
-          <Form.Label>Full name</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="John Doe"
-            name="registerName"
-            value={this.state.registerName}
-            onChange={this.onChangeRegister}
-          />
-        </Form.Group>
-        <Form.Group controlId="emailId">
-          <Form.Label>Email Id</Form.Label>
-          <Form.Control
-            type="email"
-            placeholder="name@example.com"
-            name="registerEmail"
-            value={this.state.registerEmail}
-            onChange={this.onChangeRegister}
-          />
-        </Form.Group>
-        <Form.Group controlId="password">
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            type="password"
-            placeholder="Password"
-            name="registerPassword"
-            value={this.state.registerPassword}
-            onChange={this.onChangeRegister}
-          />
-        </Form.Group>
-        <Form.Label>Confirm Password</Form.Label>
-        <Form.Group controlId="cPassword">
-          <Form.Control
-            type="password"
-            placeholder="Confirm Password"
-            name="registerCPassword"
-            value={this.state.registerCPassword}
-            onChange={this.onChangeRegister}
-          />
-        </Form.Group>
-        <Form.Group controlId="gender">
-          <Form.Label>Gender</Form.Label>
-          <Form.Control
-            as="select"
-            onChange={this.onChangeRegister}
-            name="registerGender"
-          >
-            <option>Male</option>
-            <option>Female</option>
-          </Form.Control>
-        </Form.Group>
+        <FormGroup
+          name="registerName"
+          value={this.state.registerName}
+          type="text"
+          label="Full name"
+          onChange={this.onChangeRegister}
+          error={this.state.errors.name}
+          placeholder="password"
+        />
+
+        <FormGroup
+          name="registerEmail"
+          value={this.state.registerEmail}
+          type="email"
+          label="Email Address"
+          onChange={this.onChangeRegister}
+          error={this.state.errors.email}
+          placeholder="name@example.com"
+        />
+
+        <FormGroup
+          name="registerPassword"
+          value={this.state.registerPassword}
+          type="password"
+          label="Password"
+          onChange={this.onChangeRegister}
+          error={this.state.errors.password}
+          placeholder="password"
+        />
+        <FormGroup
+          name="registerCPassword"
+          value={this.state.registerCPassword}
+          type="password"
+          label="Confirm Password"
+          onChange={this.onChangeRegister}
+          error={this.state.errors.password2}
+          placeholder="Confirm password"
+        />
+
+        <SelectListGroup
+          placeholder="Gender"
+          name="registerGender"
+          value={this.state.registerGender}
+          error={this.state.errors.gender}
+          options={options}
+        />
 
         <Button type="submit" onClick={this.onSubmitRegister}>
           Register
@@ -171,7 +183,9 @@ class AuthModal extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({});
+const mapStateToProps = (state) => ({
+  errors: state.auth.error,
+});
 
 export default connect(mapStateToProps, { requestLogin, requestRegister })(
   withRouter(AuthModal)

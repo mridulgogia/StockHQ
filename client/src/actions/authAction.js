@@ -42,10 +42,11 @@ export const requestLogin = (postObj, onClose) => (dispatch) => {
       dispatch(setCurrentUser(decoded));
     })
     .catch((err) => {
-      displayFailedModalAction(dispatch);
+      // displayFailedModalAction(dispatch);
+      console.log("Err", err.response)
       dispatch({
         type: REQUEST_ERROR_LOGIN,
-        payload: err,
+        payload: err.response.data,
       });
     });
 };
@@ -93,7 +94,7 @@ export const requestRegister = (postObj, onClose) => (dispatch) => {
     });
   }
 
-  delete postObj.cPassword;
+  // delete postObj.cPassword;
 
   axios
     .post("/api/auth/signup", postObj)
