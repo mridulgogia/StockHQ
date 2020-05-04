@@ -11,7 +11,8 @@ const userRoutes = require("./routes/user");
 const stockRoutes = require("./routes/stock");
 const companyRoutes = require("./routes/company");
 // const followRoutes = require("./routes/followStock");
-const followRoutes = require('./routes/followStock');
+const followRoutes = require("./routes/followStock");
+const verifyRoutes = require("./routes/verify");
 require("dotenv").config();
 
 app.use(cors());
@@ -37,5 +38,6 @@ app.use("/api/auth", userRoutes);
 app.use("/api/stock", stockRoutes);
 app.use("/api/company", companyRoutes);
 app.use("/api/follow", followRoutes);
+app.use("/api/verify", verifyRoutes);
 
 module.exports = app;
