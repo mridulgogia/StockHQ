@@ -1,6 +1,6 @@
 import React from "react";
 
-const SelectListGroup = ({
+export const SelectListGroup = ({
     name,
     value,
     onChange,

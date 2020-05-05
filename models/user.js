@@ -25,6 +25,7 @@ const userSchema = mongoose.Schema({
     },
     mobile: {
         type: String,
+        // required: true
     }
 });
 

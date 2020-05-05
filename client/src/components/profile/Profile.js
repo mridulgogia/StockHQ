@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import ReactTelInput from "react-telephone-input";
 import Button from "react-bootstrap/Button";
 import flags from "../../assets/images/flags.png";
+import { onClickVerifyNumber } from "../../actions/verifyMobileAction";
 // import {} from "../../assets/images/flags.png"
 class Profile extends Component {
   constructor() {
@@ -10,7 +11,7 @@ class Profile extends Component {
 
     this.state = {
       selectedCountry: "in",
-      telNumber: "",
+      mobileNumber: "",
     };
 
     this.handleMobileInputChange = this.handleMobileInputChange.bind(this);
@@ -21,15 +22,17 @@ class Profile extends Component {
   //   }
   // }
 
-  handleMobileInputChange(telNumber, selectedCountry) {
-    console.log(
-      "input changed. number: ",
-      telNumber,
-      "selected country: ",
-      selectedCountry
-    );
+  handleMobileInputChange(mobileNumber, selectedCountry) {
+    this.setState({mobileNumber: mobileNumber, selectedCountry: selectedCountry});
 
-    this.setState({ selectedCountry: selectedCountry, telNumber: telNumber });
+      // console.log(
+    //   "input changed. number: ",
+    //   telNumber,
+    //   "selected country: ",
+    //   selectedCountry
+    // );
+
+    // this.setState({ selectedCountry: selectedCountry, telNumber: telNumber });
   }
 
   render() {
@@ -47,8 +50,8 @@ class Profile extends Component {
                 <div className="profile-pic-container">
                   <div
                     className="profile-pic"
-                    style={{ backgroundImage: `url(${userDetails.avatar})` }}
-                  ></div>
+                    style={{backgroundImage: `url(${userDetails.avatar})`}}
+                  />
                 </div>
               </div>
             </div>
@@ -61,10 +64,10 @@ class Profile extends Component {
             {userDetails.isVerified ? (
               <ReactTelInput
                 disabled={!this.props.auth.isVerified}
-                // defaultCountry={this.state.selectedCountry}
-                // flagsImagePath="/assets/images/flags.png"
-                // onChange={this.handleMobileInputChange}
-                // value={this.props.mobileInput}
+                defaultCountry={this.state.selectedCountry}
+                flagsImagePath="/assets/images/flags.png"
+                onChange={this.handleMobileInputChange}
+                value={this.props.mobileInput}
               />
             ) : (
               <ReactTelInput
@@ -76,7 +79,10 @@ class Profile extends Component {
             )}
           </div>
           <div className="col-md-3">
-            <Button className="verify_btn">Verify</Button>
+            <Button
+                className="verify_btn"
+                onClick = {() => this.props.onClickVerifyNumber(this.state.mobileNumber, this.state.selectedCountry)}
+            >Verify</Button>
           </div>
         </div>
       </div>
@@ -88,4 +94,4 @@ const mapStateToProps = (state) => ({
   userDetails: state.auth.user,
 });
 
-export default connect(mapStateToProps, {})(Profile);
+export default connect(mapStateToProps, {onClickVerifyNumber})(Profile);

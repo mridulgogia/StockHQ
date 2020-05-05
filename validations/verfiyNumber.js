@@ -9,9 +9,9 @@ module.exports = function validateNumber(data) {
     errors.number = "Number is invalid";
   }
 
-  if (!Validator.isEmpty(data)) {
-    errors.email = "Number is required";
-  }
+  // if (!Validator.isEmpty(data)) {
+  //   errors.email = "Number is required";
+  // }
 
   return {
     errors,

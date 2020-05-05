@@ -13,10 +13,13 @@ const verifySid = process.env.twilioVerifySid;
 const client = require("twilio")(accountSid, authToken);
 
 exports.number = (req, res) => {
+  return res.json({ test: "test" });
   const { number } = req.body;
   const { errors, isValid } = validateNumber(number);
   if (!isValid) return res.status(400).json(errors);
-  SUser.findOne({ number: number }).then((user) => {
+
+  SUser.findOne({ mobile: number }).then((user) => {
+    console.log("users", user);
     if (user) {
       errors.number = "Number already exists";
       return res.status(400).json(errors);
@@ -24,31 +27,58 @@ exports.number = (req, res) => {
   });
   SUser.findOne({ _id: req.user.id }).then((user) => {
     if (!user) return res.status(404).json({ msg: "User not found" });
-    if (isEmpty(user.number)) {
+
+    if (user.mobile.length !== 0) {
       errors.user = "User already verified";
       return res.status(400).json(errors);
     }
 
-    client.verify
-      .services(verifySid)
-      .verifications.create({
-        to: number,
-        channel: "sms",
-      })
-      .then((verifications) => {
-        const userVerifyDetails = new Verify({
-          _id: req.user.id,
-          number: req.body.number,
-          sid: verifications.sid,
-          status: verifications.status,
-        });
+    Verify.findOne({ _id: req.user.id }).then((user) => {
+      if (user) {
+        client.verify
+          .services(verifySid)
+          .verifications.create({
+            to: number,
+            channel: "sms",
+          })
+          .then((verifications) => {
+            Verify.updateOne(
+              { _id: req.user.id },
+              {
+                $set: {
+                  mobile: number,
+                  sid: verifications.sid,
+                  status: verifications.status,
+                },
+              }
+            )
+              .then(() => res.json({ msg: "code sent" }))
+              .catch((err) => res.status.json({ error: err }));
+          })
+          .catch((err) => res.status(400).json({ error: err }));
+      } else {
+        client.verify
+          .services(verifySid)
+          .verifications.create({
+            to: number,
+            channel: "sms",
+          })
+          .then((verifications) => {
+            const userVerifyDetails = new Verify({
+              _id: req.user.id,
+              mobile: req.body.number,
+              sid: verifications.sid,
+              status: verifications.status,
+            });
 
-        userVerifyDetails
-          .save()
-          .then((user) => res.json({ msg: "code sent" }))
-          .catch((err) => res.status(500).json(err));
-      })
-      .catch((err) => res.status.json({ error: "Phone number incorrect" }));
+            userVerifyDetails
+              .save()
+              .then((user) => res.json({ msg: "code sent" }))
+              .catch((err) => res.status(500).json(err));
+          })
+          .catch((err) => res.status.json({ error: "Phone number incorrect" }));
+      }
+    });
   });
 };
 
@@ -69,11 +99,16 @@ exports.code = (req, res) => {
         Verify.updateOne(
           { _id: req.user.id },
           { $set: { status: verification_checks.status } }
-        );
+        )
+          .then((userss) => console.log("verificy update success", userss))
+          .catch((err) => console.log("verify failed", err));
         SUser.updateOne(
           { _id: req.user.id },
-          { $set: { number: verification_checks.to } }
-        );
+          { $set: { mobile: verification_checks.to } }
+        )
+          .then((userss) => console.log("SUser update", userss))
+          .catch((err) => console.log("suser failed", err));
+        res.json({ status: "success" });
       })
       .catch((err) => {
         errors.code = "Incorrect verification code";

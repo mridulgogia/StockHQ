@@ -7,7 +7,7 @@ import Button from "react-bootstrap/Button";
 import { withRouter } from "react-router-dom";
 import { requestLogin, requestRegister } from "../../actions/authAction";
 import FormGroup from "../common/inputs/FormGroup";
-import SelectListGroup from "../common/inputs/SelectListGroup";
+import{ SelectListGroup} from "../common/inputs/SelectListGroup";
 
 class AuthModal extends Component {
   constructor() {
@@ -88,7 +88,7 @@ class AuthModal extends Component {
         <FormGroup
           name="loginPassword"
           value={this.state.loginPassword}
-          type="text"
+          type="password"
           label="Password"
           onChange={this.onChangeLogin}
           error={this.state.errors.password}

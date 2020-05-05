@@ -1,19 +1,21 @@
 const mongoose = require("mongoose");
-
+const uniqueValidator = require("mongoose-unique-validator");
 const VerifySchema = mongoose.Schema({
-  number: {
+  mobile: {
     type: String,
-    // required: true,
+    required: true,
     unique: true,
   },
   status: {
     type: String,
-    // required: true,
+    required: true,
   },
   sid: {
     type: String,
-    // required: true,
+    required: true,
   },
 });
+
+VerifySchema.plugin(uniqueValidator);
 
 module.exports = mongoose.model("Verify", VerifySchema);

@@ -12,9 +12,9 @@ const secretKey = process.env.secretKey;
 const isEmpty = require("../validations/isEmpty");
 
 exports.signup = (req, res) => {
-  const { errors, isValid } = validateSignupInput(req.body);
-  if (!isValid) return res.status(400).json(errors);
-
+  // const { errors, isValid } = validateSignupInput(req.body);
+  // if (!isValid) return res.status(400).json(errors);
+let errors= {}
   const { email, password, name, gender } = req.body;
 
   SUser.findOne({
@@ -38,6 +38,7 @@ exports.signup = (req, res) => {
         password: password,
         gender: gender,
         avatar: avatar,
+        mobile: ""
       });
 
       bcrypt.genSalt(10, (err, salt) => {
