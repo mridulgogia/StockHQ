@@ -22,7 +22,6 @@ class Modals extends Component {
         onClose={()=>{}}
         />
     </Fragment>);
-
   }
 }
 

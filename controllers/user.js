@@ -50,7 +50,7 @@ let errors= {}
             .then((user) => {
               const payload = {
                 id: user.id,
-                name: user.id,
+                name: user.name,
                 email: user.email,
                 avatar: user.avatar,
                 isVerified: false,
@@ -97,7 +97,7 @@ exports.login = (req, res) => {
           name: user.name,
           email: user.email,
           avatar: user.avatar,
-          isVerified: isEmpty(user.mobile),
+          isVerified: user.mobile.length>0,
         };
 
         jwt.sign(

@@ -4,7 +4,8 @@ import ReactTelInput from "react-telephone-input";
 import Button from "react-bootstrap/Button";
 import flags from "../../assets/images/flags.png";
 import { onClickVerifyNumber } from "../../actions/verifyMobileAction";
-// import {} from "../../assets/images/flags.png"
+import VerifyCodeModal from "../common/modals/VerifyCodeModal";
+
 class Profile extends Component {
   constructor() {
     super();
@@ -12,6 +13,8 @@ class Profile extends Component {
     this.state = {
       selectedCountry: "in",
       mobileNumber: "",
+      showVerifyCodeModal: false,
+      error: {},
     };
 
     this.handleMobileInputChange = this.handleMobileInputChange.bind(this);
@@ -22,21 +25,37 @@ class Profile extends Component {
   //   }
   // }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.error) {
+      this.setState({
+        error: nextProps.error,
+      });
+    }
+  }
+
   handleMobileInputChange(mobileNumber, selectedCountry) {
-    this.setState({mobileNumber: mobileNumber, selectedCountry: selectedCountry});
+    this.setState({
+      mobileNumber: mobileNumber,
+      selectedCountry: selectedCountry,
+    });
+  }
 
-      // console.log(
-    //   "input changed. number: ",
-    //   telNumber,
-    //   "selected country: ",
-    //   selectedCountry
-    // );
+  toggleVerifyCodeModal() {
+    this.setState((prevState) => ({
+      showVerifyCodeModal: !prevState.showVerifyCodeModal,
+    }));
+  }
 
-    // this.setState({ selectedCountry: selectedCountry, telNumber: telNumber });
+  closeVerifyCodeModal() {
+    this.setState({
+      showVerifyCodeModal: false,
+    });
   }
 
   render() {
+    console.log("state", this.state.error);
     const { userDetails } = this.props;
+    console.log(Boolean(this.state.error.number));
     return (
       <div className="container profile_container">
         <div className="row">
@@ -50,7 +69,7 @@ class Profile extends Component {
                 <div className="profile-pic-container">
                   <div
                     className="profile-pic"
-                    style={{backgroundImage: `url(${userDetails.avatar})`}}
+                    style={{ backgroundImage: `url(${userDetails.avatar})` }}
                   />
                 </div>
               </div>
@@ -63,28 +82,46 @@ class Profile extends Component {
             <div className="profile_text">Signup for our alerts!</div>
             {userDetails.isVerified ? (
               <ReactTelInput
-                disabled={!this.props.auth.isVerified}
+                disabled={!this.props.userDetails.isVerified}
                 defaultCountry={this.state.selectedCountry}
                 flagsImagePath="/assets/images/flags.png"
                 onChange={this.handleMobileInputChange}
                 value={this.props.mobileInput}
               />
             ) : (
-              <ReactTelInput
-                defaultCountry={this.state.selectedCountry}
-                flagsImagePath={flags}
-                onChange={this.handleMobileInputChange}
-                value={this.state.mobileInput}
-              />
+              <Fragment>
+                <ReactTelInput
+                  defaultCountry={this.state.selectedCountry}
+                  flagsImagePath={flags}
+                  onChange={this.handleMobileInputChange}
+                  value={this.state.mobileInput}
+                />
+                {this.state.error && (
+                  <div className="invalid-text">{this.state.error.number}</div>
+                )}
+              </Fragment>
             )}
           </div>
           <div className="col-md-3">
             <Button
-                className="verify_btn"
-                onClick = {() => this.props.onClickVerifyNumber(this.state.mobileNumber, this.state.selectedCountry)}
-            >Verify</Button>
+              className="verify_btn"
+              onClick={() =>
+                this.props.onClickVerifyNumber(
+                  this.state.mobileNumber,
+                  this.state.selectedCountry,
+                  this.toggleVerifyCodeModal.bind(this)
+                )
+              }
+            >
+              Verify
+            </Button>
           </div>
         </div>
+
+        <VerifyCodeModal
+          show={this.state.showVerifyCodeModal}
+          onHide={this.closeVerifyCodeModal.bind(this)}
+        />
       </div>
     );
   }
@@ -92,6 +129,8 @@ class Profile extends Component {
 
 const mapStateToProps = (state) => ({
   userDetails: state.auth.user,
+  verifyAcc: state.verifyAcc,
+  error: state.verifyAcc.error,
 });
 
-export default connect(mapStateToProps, {onClickVerifyNumber})(Profile);
+export default connect(mapStateToProps, { onClickVerifyNumber })(Profile);

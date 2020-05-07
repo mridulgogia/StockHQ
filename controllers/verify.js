@@ -5,7 +5,7 @@ const Verify = require("../models/verify");
 
 const validateNumber = require("../validations/verfiyNumber");
 const validateCode = require("../validations/verifyCode");
-const isEmpty = require("../validations/isEmpty");
+// const isEmpty = require("../validations/isEmpty");
 
 const accountSid = process.env.twilioSid;
 const authToken = process.env.twilioAuth;
@@ -13,10 +13,12 @@ const verifySid = process.env.twilioVerifySid;
 const client = require("twilio")(accountSid, authToken);
 
 exports.number = (req, res) => {
-  return res.json({ test: "test" });
+  const errors = {};
+  errors.number = "Failed";
+  return res.status(400).json(errors);
   const { number } = req.body;
-  const { errors, isValid } = validateNumber(number);
-  if (!isValid) return res.status(400).json(errors);
+  // const { errors, isValid } = validateNumber(number);
+  // if (!isValid) return res.status(400).json(errors);
 
   SUser.findOne({ mobile: number }).then((user) => {
     console.log("users", user);
@@ -25,6 +27,7 @@ exports.number = (req, res) => {
       return res.status(400).json(errors);
     }
   });
+
   SUser.findOne({ _id: req.user.id }).then((user) => {
     if (!user) return res.status(404).json({ msg: "User not found" });
 
@@ -32,6 +35,14 @@ exports.number = (req, res) => {
       errors.user = "User already verified";
       return res.status(400).json(errors);
     }
+
+    Verify.findOne({ mobile: number }).then((user) => {
+      if (user) {
+        if (user._id !== req.user.id) {
+          errors.number = "Number already exists";
+        }
+      }
+    });
 
     Verify.findOne({ _id: req.user.id }).then((user) => {
       if (user) {

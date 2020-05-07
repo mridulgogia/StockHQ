@@ -4,10 +4,12 @@ import auth from "./authReducer";
 import mostActivities from "./mostActivitiesReducer";
 import stockPageInfo from "./stockPageReducer";
 import modals from "./modalsReducer";
+import verifyAcc from "./verifyMobileReducer";
 
 export default combineReducers({
   auth: auth,
   mostActivities: mostActivities,
   stockPageInfo: stockPageInfo,
-  modals: modals
+  modals: modals,
+  verifyAcc: verifyAcc,
 });
