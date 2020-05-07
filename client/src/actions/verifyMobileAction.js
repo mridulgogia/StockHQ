@@ -4,6 +4,10 @@ export const INIT_REQUEST_VERIFY = "INIT_REQUEST_VERIFY";
 export const COMPLETED_REQUEST_VERIFY = "COMPLETED_REQUEST_VERIFY";
 export const ERROR_REQUEST_VERFIFY = "ERROR_REQUEST_VERFIFY";
 
+export const INIT_REQUEST_CODE = "INIT_REQUEST_CODE";
+export const COMPLETED_REQUEST_CODE = "COMPLETED_REQUEST_CODE";
+export const ERROR_REQUEST_CODE = "ERROR_REQUEST_CODE";
+
 export const onClickVerifyNumber = (mobileNumber, countryCode, toggleModal) => (
   dispatch
 ) => {
@@ -43,4 +47,24 @@ export const onClickVerifyNumber = (mobileNumber, countryCode, toggleModal) => (
         payload: err.response.data,
       });
     });
+};
+
+export const onSubmitVerifyCode = (code, onHideModal) => (dispatch) => {
+  dispatch({ type: INIT_REQUEST_CODE });
+
+  axios
+    .post("/api/verify.mobile/code", { code: code })
+    .then((res) => {
+      onHideModal();
+      dispatch({
+        type: COMPLETED_REQUEST_CODE,
+        payload: res.data,
+      });
+    })
+    .catch((err) =>
+      dispatch({
+        type: ERROR_REQUEST_CODE,
+        payload: err.response.data,
+      })
+    );
 };
