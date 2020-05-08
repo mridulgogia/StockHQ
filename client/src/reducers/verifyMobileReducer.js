@@ -2,9 +2,10 @@ import {
   INIT_REQUEST_VERIFY,
   COMPLETED_REQUEST_VERIFY,
   ERROR_REQUEST_VERFIFY,
+  INIT_REQUEST_CODE,
 } from "../actions/verifyMobileAction";
 
-export default function verifyAcc(
+export function verifyAcc(
   state = {
     isLoading: false,
     error: null,
@@ -33,6 +34,19 @@ export default function verifyAcc(
         isLoading: false,
         error: action.payload,
       };
+      return state;
+    default:
+      return state;
+  }
+}
+
+export function verifyCode(state = {
+  isLoading: false,
+  msg: "",
+  error: null
+}, action) {
+  switch (action.type) {
+    case INIT_REQUEST_CODE:
       return state;
     default:
       return state;

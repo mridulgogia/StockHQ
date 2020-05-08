@@ -41,10 +41,10 @@ export const onClickVerifyNumber = (mobileNumber, countryCode, toggleModal) => (
       }
     })
     .catch((err) => {
-      console.log("err", err.response.data);
+      console.log("err", err);
       dispatch({
         type: ERROR_REQUEST_VERFIFY,
-        payload: err.response.data,
+        payload: err,
       });
     });
 };
@@ -53,7 +53,7 @@ export const onSubmitVerifyCode = (code, onHideModal) => (dispatch) => {
   dispatch({ type: INIT_REQUEST_CODE });
 
   axios
-    .post("/api/verify.mobile/code", { code: code })
+    .post("/api/verify/mobile/code", { code: code })
     .then((res) => {
       onHideModal();
       dispatch({

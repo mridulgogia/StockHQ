@@ -12,7 +12,7 @@ export default function FormGroup({
 }) {
   return (
     <Fragment>
-      <label for={name}>{label}</label>
+      <label>{label}</label>
       <div className="input-group mb-3">
         <input
           className={`form-control form-control-lg ${ error ? "is-invalid": ''}`}

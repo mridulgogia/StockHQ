@@ -13,12 +13,12 @@ const verifySid = process.env.twilioVerifySid;
 const client = require("twilio")(accountSid, authToken);
 
 exports.number = (req, res) => {
-  const errors = {};
-  errors.number = "Failed";
-  return res.status(400).json(errors);
+  // const errors = {};
+  // errors.number = "Failed";
+  // return res.status(400).json(errors);
   const { number } = req.body;
-  // const { errors, isValid } = validateNumber(number);
-  // if (!isValid) return res.status(400).json(errors);
+  const { errors, isValid } = validateNumber(number);
+  if (!isValid) return res.status(400).json(errors);
 
   SUser.findOne({ mobile: number }).then((user) => {
     console.log("users", user);
@@ -64,7 +64,7 @@ exports.number = (req, res) => {
               }
             )
               .then(() => res.json({ msg: "code sent" }))
-              .catch((err) => res.status.json({ error: err }));
+              .catch((err) => res.status(400).json({ error: err }));
           })
           .catch((err) => res.status(400).json({ error: err }));
       } else {

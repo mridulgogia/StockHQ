@@ -15,9 +15,17 @@ class VerifyCodeModal extends Component {
     this.state = {
       verifyCode: "",
     };
+
+    this.onChangeVerifyCode = this.onChangeVerifyCode.bind(this);
   }
 
-  onChange(event) {
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.errors) {
+      this.setState({ errors: nextProps.errors });
+    }
+  }
+
+  onChangeVerifyCode(event) {
     const { name, value } = event.target;
 
     this.setState({
@@ -25,22 +33,22 @@ class VerifyCodeModal extends Component {
     });
   }
 
+  onSubmitCode(event) {
+    event.preventDefault();
+    this.props.onSubmitVerifyCode(this.state.verifyCode, this.props.onHide);
+  }
   render() {
     return (
       <Modal {...this.props}>
         <Modal.Body>
-          <Form
-            onSubmit={() =>
-              this.props.onSubmitVerifyCode(this.state.verifyCode, onHide)
-            }
-          >
+          <Form onSubmit={this.onSubmitCode.bind(this)}>
             <FormGroup
               name="verifyCode"
               value={this.state.verifyCode}
               type="text"
-              onChange={}
+              onChange={this.onChangeVerifyCode}
               label="OTP"
-              error={}
+              error={this.state.errors}
               placeholder="6 digit code"
             />
             <Button type="submit">Verify</Button>
@@ -51,7 +59,9 @@ class VerifyCodeModal extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({});
+const mapStateToProps = (state) => ({
+  errors: state.verifyCode.error,
+});
 
 export default connect(mapStateToProps, { onSubmitVerifyCode })(
   VerifyCodeModal
