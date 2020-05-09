@@ -5,11 +5,13 @@ export const FETCHED_FOLLOW_STATE = "FETCHED_FOLLOW_STATE";
 export const ERROR_FOLLOW_STATE = "ERROR_FOLLOW_STATE";
 
 export const fetchFollowState = (pathname) => (dispatch) => {
+  console.log("url", pathname);
   dispatch({
     type: FETCHING_FOLLOW_STATE,
   });
 
   const stockName = pathname.split("/")[2];
+  console.log("stockName", stockName);
 
   axios
     .get("/api/follow/followStockCheck/" + stockName)
@@ -34,7 +36,7 @@ export const fetchFollowState = (pathname) => (dispatch) => {
     );
 };
 
-export const followStock = (pathname) => (dispatch) => {
+export const followStock = (pathname, displayVerifyModal) => (dispatch) => {
   const stockName = pathname.split("/")[2];
 
   axios
@@ -45,11 +47,13 @@ export const followStock = (pathname) => (dispatch) => {
         payload: res.data.isFollowed,
       })
     )
-    .catch((err) =>
+    .catch((err) =>{
+      displayVerifyModal();
       dispatch({
         type: ERROR_FOLLOW_STATE,
         payload: false,
       })
+    }
     );
 };
 

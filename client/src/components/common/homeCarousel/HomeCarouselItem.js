@@ -30,4 +30,5 @@ import { Link } from "react-router-dom";
 HomeCarouselItem.propTypes = {
   item: Proptypes.object.isRequired,
 }
+
 export default HomeCarouselItem

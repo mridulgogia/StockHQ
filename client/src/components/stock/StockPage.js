@@ -13,6 +13,7 @@ import FollowWidget from "../widget/FollowWidget";
 
 class StockPage extends Component {
   componentDidMount() {
+    document.title = `${this.props.location.pathname.split("/")[2]} | StockHQ`
     this.props.fetchStockInfo(this.props.location.pathname);
     this.props.fetchHistoricalCharts(
       this.props.duration,

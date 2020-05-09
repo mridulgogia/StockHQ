@@ -1,9 +1,13 @@
 import React, { Component } from "react";
 
-import MostActive from '../mostActive/MostActive';
-import MostGainers from '../mostGainers/MostGainers';
-import MostLosers from '../mostLosers/MostLosers';
+import MostActive from "../mostActive/MostActive";
+import MostGainers from "../mostGainers/MostGainers";
+import MostLosers from "../mostLosers/MostLosers";
 export default class Homepage extends Component {
+  componentDidMount() {
+    document.title = "Home | StockHQ";
+  }
+
   render() {
     return (
       <div className="container">

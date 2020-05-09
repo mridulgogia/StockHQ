@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import NavDropdown from "react-bootstrap/NavDropdown";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
 import AuthModal from "../authModal/AuthModal";
@@ -53,10 +53,9 @@ class Header extends Component {
         <Link className="nav-link nav_link-text" to="/profile">
           Profile
         </Link>
-        <div 
-          className="nav-link nav_link-text"
-          onClick={this.props.logoutUser}
-        >Logout</div>
+        <div className="nav-link nav_link-text" onClick={this.props.logoutUser}>
+          Logout
+        </div>
       </div>
     );
 
@@ -77,14 +76,17 @@ class Header extends Component {
       </div>
     );
 
-    const {isAuthenticated} = this.props;
+    const { isAuthenticated } = this.props;
     return (
       <Navbar bg="dark" expand="lg">
-        <Navbar.Brand href="#home">StockHQ</Navbar.Brand>
+        <Navbar.Brand style={{ color: "#fff" }}>StockHQ</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
-            <Nav.Link href="#home">Home</Nav.Link>
+            <Link className="nav-link nav_link-text" to="/">
+              Home
+            </Link>
+            {/* <Nav.Link to="/">Home</Nav.Link> */}
             <Nav.Link href="#link">Link</Nav.Link>
             <NavDropdown title="Dropdown" id="basic-nav-dropdown">
               <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
@@ -98,7 +100,7 @@ class Header extends Component {
               </NavDropdown.Item>
             </NavDropdown>
             <div className="dummy-div"></div>
-        {isAuthenticated? authLinks : guestLinks}
+            {isAuthenticated ? authLinks : guestLinks}
           </Nav>
         </Navbar.Collapse>
         <AuthModal
@@ -115,4 +117,4 @@ const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
 });
 
-export default connect(mapStateToProps, {logoutUser})(Header);
+export default connect(mapStateToProps, { logoutUser })(Header);

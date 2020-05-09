@@ -4,6 +4,7 @@ import ReactTelInput from "react-telephone-input";
 import Button from "react-bootstrap/Button";
 import flags from "../../assets/images/flags.png";
 import { onClickVerifyNumber } from "../../actions/verifyMobileAction";
+import { fetchMobileNumber, clearMobileNumber } from "../../actions/miscAction";
 import VerifyCodeModal from "../common/modals/VerifyCodeModal";
 
 class Profile extends Component {
@@ -19,11 +20,14 @@ class Profile extends Component {
 
     this.handleMobileInputChange = this.handleMobileInputChange.bind(this);
   }
-  // componentDidMount() {
-  //   if(this.props.userDetails.isVerified) {
-  //     this.props.fetchMobileNumber();
-  //   }
-  // }
+  componentDidMount() {
+    this.props.fetchMobileNumber();
+    document.title = "Profile | StockHQ";
+  }
+
+  componentWillUnmount() {
+    this.props.clearMobileNumber();
+  }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.error) {
@@ -80,13 +84,12 @@ class Profile extends Component {
         <div className="row">
           <div className="col-md-12">
             <div className="profile_text">Signup for our alerts!</div>
-            {userDetails.isVerified ? (
+            {this.props.mobileNumber.mobile ? (
               <ReactTelInput
-                disabled={!this.props.userDetails.isVerified}
+                disabled={true}
                 defaultCountry={this.state.selectedCountry}
                 flagsImagePath="/assets/images/flags.png"
-                onChange={this.handleMobileInputChange}
-                value={this.props.mobileInput}
+                value={this.props.mobileNumber.mobile}
               />
             ) : (
               <Fragment>
@@ -99,22 +102,22 @@ class Profile extends Component {
                 {this.state.error && (
                   <div className="invalid-text">{this.state.error.number}</div>
                 )}
+                <div className="col-md-3">
+                  <Button
+                    className="verify_btn"
+                    onClick={() =>
+                      this.props.onClickVerifyNumber(
+                        this.state.mobileNumber,
+                        this.state.selectedCountry,
+                        this.toggleVerifyCodeModal.bind(this)
+                      )
+                    }
+                  >
+                    Verify
+                  </Button>
+                </div>
               </Fragment>
             )}
-          </div>
-          <div className="col-md-3">
-            <Button
-              className="verify_btn"
-              onClick={() =>
-                this.props.onClickVerifyNumber(
-                  this.state.mobileNumber,
-                  this.state.selectedCountry,
-                  this.toggleVerifyCodeModal.bind(this)
-                )
-              }
-            >
-              Verify
-            </Button>
           </div>
         </div>
 
@@ -131,6 +134,11 @@ const mapStateToProps = (state) => ({
   userDetails: state.auth.user,
   verifyAcc: state.verifyAcc,
   error: state.verifyAcc.error,
+  mobileNumber: state.mobileNumber,
 });
 
-export default connect(mapStateToProps, { onClickVerifyNumber })(Profile);
+export default connect(mapStateToProps, {
+  onClickVerifyNumber,
+  fetchMobileNumber,
+  clearMobileNumber,
+})(Profile);

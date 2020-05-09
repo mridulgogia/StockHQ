@@ -1,6 +1,8 @@
 const SUser = require("../models/user");
 const follow = require("../models/followStock");
 exports.follow = (req, res) => {
+  let error = {};
+
   follow
     .findOne({ _id: req.user.id })
     .then((followArr) => {
@@ -43,19 +45,26 @@ exports.follow = (req, res) => {
             );
         }
       } else {
-        const newFollow = new follow({
-          _id: req.user.id,
-          follows: [stockName],
-        });
+        SUser.findOne({ _id: req.user.id }).then((user) => {
+          if (user.mobile.length === 0) {
+            error.number = "User is not verified";
+            return res.status(400).json(error);
+          } else {
+            const newFollow = new follow({
+              _id: req.user.id,
+              follows: [stockName],
+            });
 
-        newFollow
-          .save()
-          .then((followArr) => {
-            res.json({ isFollowed: true, stockName: stockName });
-          })
-          .catch((err) =>
-            res.status(400).json({ isFollowed: false, error: err })
-          );
+            newFollow
+              .save()
+              .then((followArr) => {
+                res.json({ isFollowed: true, stockName: stockName });
+              })
+              .catch((err) =>
+                res.status(400).json({ isFollowed: false, error: err })
+              );
+          }
+        });
       }
     })
     .catch((err) => res.status(400).json({ error: err }));
@@ -75,29 +84,32 @@ exports.displayList = (req, res) => {
 };
 
 exports.checkFollow = (req, res) => {
-  follow.findOne({_id: req.user.id})
-    .then(followingList => {
-      if(followingList) {
-        if(followingList.follows.indexOf(req.params.id) > 0) {
+  follow
+    .findOne({ _id: req.user.id })
+    .then((followingList) => {
+      if (followingList) {
+        if (followingList.follows.indexOf(req.params.id) > 0) {
           res.json({
             isFollowed: true,
-            stockName: req.params.id
-          })
-        }else{
+            stockName: req.params.id,
+          });
+        } else {
           res.json({
             isFollowed: false,
-            stockName: req.params.id
-          })
+            stockName: req.params.id,
+          });
         }
       } else {
         res.json({
           isFollowed: false,
-          stockName: req.params.id
-        })
+          stockName: req.params.id,
+        });
       }
     })
-    .catch(err => res.status(400).json({
-      error: err, 
-      isFollowed: false,
-    }))
-}
+    .catch((err) =>
+      res.status(400).json({
+        error: err,
+        isFollowed: false,
+      })
+    );
+};

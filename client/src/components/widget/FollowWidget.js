@@ -22,7 +22,7 @@ class FollowWidget extends Component {
 
   componentDidMount() {
     this.props.cleanIsFollowed();
-    if (this.props.isAuthenticated && this.props.isVerified) {
+    if (this.props.isAuthenticated) {
       this.props.fetchFollowState(this.props.pathname);
     }
   }
@@ -54,12 +54,12 @@ class FollowWidget extends Component {
       <Button onClick={() => this.props.displayVerifyModal()}>Follow</Button>
     );
 
-    const followBtn = <Button onClick={() => this.props.followStock(this.props.pathname)}>{this.props.isFollowed ? "Unfollow" : "Follow"}</Button>;
+    const followBtn = <Button onClick={() => this.props.followStock(this.props.pathname, this.props.displayVerifyModal)}>{this.props.isFollowed ? "Unfollow" : "Follow"}</Button>;
 
     const button = isAuthenticated
-      ? isVerified
+      // ? isVerified
         ? followBtn
-        : notVerifiedBtn
+        // : notVerifiedBtn
       : notAuthBtn;
 
     return (

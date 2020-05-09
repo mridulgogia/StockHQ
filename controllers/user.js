@@ -53,7 +53,7 @@ let errors= {}
                 name: user.name,
                 email: user.email,
                 avatar: user.avatar,
-                isVerified: false,
+                // isVerified: false,
               };
 
               jwt.sign(
@@ -97,7 +97,7 @@ exports.login = (req, res) => {
           name: user.name,
           email: user.email,
           avatar: user.avatar,
-          isVerified: user.mobile.length>0,
+          // isVerified: user.mobile.length>0,
         };
 
         jwt.sign(
