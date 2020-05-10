@@ -9,7 +9,8 @@
     "client": "yarn run start --prefix client",
     "start": "node server.js",
     "devServer": "nodemon server.js",
-    "dev": "concurrently \"yarn run devServer\" \"yarn run client\""
+    "dev": "concurrently \"yarn run devServer\" \"yarn run client\"",
+    "build": "yarn run start"
   },
   "dependencies": {
     "axios": "^0.19.2",
