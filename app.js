@@ -14,6 +14,7 @@ const companyRoutes = require("./routes/company");
 const followRoutes = require("./routes/followStock");
 const verifyRoutes = require("./routes/verify");
 const miscRoutes = require("./routes/misc");
+const cron = require("./routes/cron");
 
 app.use(cors());
 
@@ -40,5 +41,7 @@ app.use("/api/company", companyRoutes);
 app.use("/api/follow", followRoutes);
 app.use("/api/verify", verifyRoutes);
 app.use("/api/misc", miscRoutes);
+
+app.use("/api/", cron);
 
 module.exports = app;

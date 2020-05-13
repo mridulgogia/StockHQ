@@ -1,6 +1,10 @@
 const axios = require("axios");
 const helperApiUrl = require("../constant").helperApiUrl;
 
+exports.fetchQuote = (id) => {
+  return axios.get(`${helperApiUrl}quote/${id}`);
+};
+
 exports.profile = (req, res) => {
   const param = `company/profile/${req.params.id}`;
   axios
@@ -30,11 +34,10 @@ exports.currentPrice = (req, res) => {
 };
 
 exports.quote = (req, res) => {
-  const param = `quote/${req.params.id}`;
-  axios
-    .get(`${helperApiUrl}${param}`)
+  // const param = `quote/${req.params.id}`;
+  this.fetchQuote(req.params.id)
     .then((response) => res.json({ data: response.data }))
-    .catch((err) => res.status(500).json({ err: err }));
+    .catch((err) => res.status(400).json({ err: err }));
 };
 
 exports.historicalChart = (req, res) => {

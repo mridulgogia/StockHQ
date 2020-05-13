@@ -13,15 +13,11 @@ const verifySid = process.env.twilioVerifySid;
 const client = require("twilio")(accountSid, authToken);
 
 exports.number = (req, res) => {
-  // const errors = {};
-  // errors.number = "Failed";
-  // return res.status(400).json(errors);
   const { number } = req.body;
   const { errors, isValid } = validateNumber(number);
   if (!isValid) return res.status(400).json(errors);
 
   SUser.findOne({ mobile: number }).then((user) => {
-    console.log("users", user);
     if (user) {
       errors.number = "Number already exists";
       return res.status(400).json(errors);
@@ -111,14 +107,10 @@ exports.code = (req, res) => {
           { _id: req.user.id },
           { $set: { status: verification_checks.status } }
         )
-          .then((userss) => console.log("verificy update success", userss))
-          .catch((err) => console.log("verify failed", err));
         SUser.updateOne(
           { _id: req.user.id },
           { $set: { mobile: verification_checks.to } }
         )
-          .then((userss) => console.log("SUser update", userss))
-          .catch((err) => console.log("suser failed", err));
         res.json({ status: "success" });
       })
       .catch((err) => {
