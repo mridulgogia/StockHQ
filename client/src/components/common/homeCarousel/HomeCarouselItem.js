@@ -3,10 +3,11 @@ import Proptypes from "prop-types";
 import Card from "react-bootstrap/Card";
 import { Link } from "react-router-dom";
 
- const HomeCarouselItem  = ({ item}) => {
+const HomeCarouselItem = (props) => {
+  const item = props.item;
   return (
-    <div className="col-md-2 carousel_item">
-      <Card className="text-center">
+    // <div className="carousel_item " {...props}>
+      <Card className="text-center" {...props}>
         <Card.Header>
           <Link to={`/company/${item.ticker}`} className="magic-link"></Link>
           {item.companyName}
@@ -23,12 +24,12 @@ import { Link } from "react-router-dom";
           </Card.Text>
         </Card.Body>
       </Card>
-    </div>
+    //  </div>
   );
 };
 
 HomeCarouselItem.propTypes = {
   item: Proptypes.object.isRequired,
-}
+};
 
-export default HomeCarouselItem
+export default HomeCarouselItem;
