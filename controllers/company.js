@@ -1,14 +1,16 @@
+require("dotenv").config();
+
 const axios = require("axios");
 const helperApiUrl = require("../constant").helperApiUrl;
-
+const financeApikey = process.env.financeApikey;
 exports.fetchQuote = (id) => {
-  return axios.get(`${helperApiUrl}quote/${id}`);
+  return axios.get(`${helperApiUrl}quote/${id}?apikey=${financeApikey}`);
 };
 
 exports.profile = (req, res) => {
   const param = `company/profile/${req.params.id}`;
   axios
-    .get(`${helperApiUrl}${param}`)
+    .get(`${helperApiUrl}${param}?apikey=${financeApikey}`)
     .then((response) => res.json({ data: response.data }))
     .catch((err) => res.status(500).json({ err: err }));
 };
@@ -16,7 +18,7 @@ exports.profile = (req, res) => {
 exports.listAll = (req, res) => {
   const param = `stock/real-time-price`;
   axios
-    .get(helperApiUrl + param)
+    .get(helperApiUrl + param + "?apikey=" + financeApikey)
     .then((response) =>
       res.json({
         data: response.data,
@@ -28,7 +30,7 @@ exports.listAll = (req, res) => {
 exports.currentPrice = (req, res) => {
   const param = `stock/real-time-price/${req.params.id}`;
   axios
-    .get(helperApiUrl + param)
+    .get(helperApiUrl + param + "?apikey=" + financeApikey)
     .then((response) => res.json({ data: response.data }))
     .catch((err) => res.status(500).json({ err }));
 };
@@ -45,7 +47,7 @@ exports.historicalChart = (req, res) => {
   const param = `historical-chart/${duration}/${id}`;
 
   axios
-    .get(helperApiUrl + param)
+    .get(helperApiUrl + param + "?apikey=" + financeApikey)
     .then((response) => res.json({ data: response.data }))
     .catch((err) => res.status(500).json({ err }));
 };

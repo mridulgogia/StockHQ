@@ -1,8 +1,12 @@
+require("dotenv").config();
+
 const axios = require("axios");
 const helperApiUrl = require("../constant").helperApiUrl;
 
+const financeApikey = process.env.financeApikey;
+
 exports.actives = (req, res) => {
-  const param = "stock/actives";
+  const param = "stock/actives" + "?apikey=" + financeApikey;
   axios
     .get(`${helperApiUrl}${param}`)
     .then((response) => {
@@ -14,7 +18,7 @@ exports.actives = (req, res) => {
 };
 
 exports.gainers = (req, res) => {
-  const param = "stock/gainers";
+  const param = "stock/gainers" + "?apikey=" + financeApikey;
   axios
     .get(`${helperApiUrl}${param}`)
     .then((response) =>
@@ -26,7 +30,7 @@ exports.gainers = (req, res) => {
 };
 
 exports.losers = (req, res) => {
-  const param = "stock/losers";
+  const param = "stock/losers" + "?apikey=" + financeApikey;
   axios
     .get(`${helperApiUrl}${param}`)
     .then((response) =>
