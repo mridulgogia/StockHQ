@@ -6,8 +6,8 @@ import { Link } from "react-router-dom";
 const HomeCarouselItem = (props) => {
   const item = props.item;
   return (
-    // <div className="carousel_item " {...props}>
-      <Card className="text-center" {...props}>
+    <div className="carousel_item col-md-2" >
+      <Card className="text-center" >
         <Card.Header>
           <Link to={`/company/${item.ticker}`} className="magic-link"></Link>
           {item.companyName}
@@ -24,7 +24,7 @@ const HomeCarouselItem = (props) => {
           </Card.Text>
         </Card.Body>
       </Card>
-    //  </div>
+      </div>
   );
 };
 

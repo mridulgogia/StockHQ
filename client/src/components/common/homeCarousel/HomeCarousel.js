@@ -25,10 +25,10 @@ function HomeCarousel({ title, data }) {
     <div className="row">
       <div className="col-md-12 carousel_container">
         <h2 className="carousel_title"> {title}</h2>
-        {/* <div className="row">{mapping}</div> */}
-        <Slider {...settings}>
+        <div className="row">{mapping}</div>
+        {/* <Slider {...settings}>
         {mapping}
-        </Slider>
+        </Slider> */}
       </div>
     </div>
   );
