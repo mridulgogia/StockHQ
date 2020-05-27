@@ -81,7 +81,7 @@ class StockPage extends Component {
             </div>
             <div className="row">
               <div className="col-md-12 info_description">
-                <CompanyChart data={this.props.historicalChart.data} />
+                <CompanyChart data={this.props.historicalChart.data.data} />
               </div>
             </div>
 
