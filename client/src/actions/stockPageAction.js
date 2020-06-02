@@ -13,7 +13,6 @@ export const ERROR_HISTORICAL_CHART = "ERROR_HISTORICAL_CHART";
 
 export const fetchStockInfo = (stockName) => (dispatch) => {
   dispatch({ type: FETCHING_INFO });
-  dispatch({ type: FETCHING_INFO });
   stockName = stockName.split("/")[2];
 
   axios.get("/api/company/profile/" + stockName)

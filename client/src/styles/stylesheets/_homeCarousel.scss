@@ -10,6 +10,7 @@
   &_item {
     margin-bottom: 10px;
     display: inline-block;
+    width: 200px;
   }
 }
 
@@ -33,4 +34,35 @@
 
 .negative {
   color: #f20e0e;
+}
+
+
+@media only screen and (max-width: 480px) {
+  .carousel_item{
+    width: 175px;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .carousel_item{
+    width: 150px;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .carousel_item{
+    width: 150px;
+  }
+}
+
+@media only screen and (max-width: 868px) {
+  .carousel_item{
+    width: 200px;
+  }
+}
+
+@media only screen and (max-width: 1000px) {
+  .carousel_item{
+    width: 125px;
+  }
 }

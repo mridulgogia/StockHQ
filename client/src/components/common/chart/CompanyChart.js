@@ -25,7 +25,12 @@ export default class CompanyChart extends Component {
             ]
           }}
           options={{
-            title: "Stocks"
+            title: "Stocks",
+          //   scales: {
+          //     xAxes: [{
+          //         stacked: true
+          //     }]
+          // }
           }} 
           />
       </div>

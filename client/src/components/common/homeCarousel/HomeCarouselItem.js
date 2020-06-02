@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 const HomeCarouselItem = (props) => {
   const item = props.item;
   return (
-    <div className="carousel_item col-md-2" >
+    <div className="carousel_item" >
       <Card className="text-center" >
         <Card.Header>
           <Link to={`/company/${item.ticker}`} className="magic-link"></Link>

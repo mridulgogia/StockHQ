@@ -14,21 +14,57 @@ function HomeCarousel({ title, data }) {
   ));
 
   var settings = {
-    dots: true,
-    infinite: false,
-    speed: 500,
+    dots: false,
+    infinite: true,
+    // speed: 500,
     slidesToShow: 5,
     slidesToScroll: 1,
+    // autoplay: true,
+    autoplaySpeed: 2000,
+    pauseOnHover: true,
+
+
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 5,
+          slidesToScroll: 1,
+          // infinite: true,
+        }
+      },
+      {
+        breakpoint: 868,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 1
+        }
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 1,
+          // initialSlide: 2
+        }
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1
+        }
+      }
+    ],
   };
 
   return (
     <div className="row">
       <div className="col-md-12 carousel_container">
         <h2 className="carousel_title"> {title}</h2>
-        <div className="row">{mapping}</div>
-        {/* <Slider {...settings}>
-        {mapping}
-        </Slider> */}
+        <Slider {...settings}>
+          {mapping}
+        </Slider>
       </div>
     </div>
   );

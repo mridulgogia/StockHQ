@@ -13,6 +13,11 @@ export default class Homepage extends Component {
       <div className="container">
         <div className="row">
           <div className="col-md-12">
+            <Banner />
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-12">
             <MostActive />
             <MostGainers />
             <MostLosers />

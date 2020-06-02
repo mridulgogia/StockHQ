@@ -3,6 +3,7 @@ require("dotenv").config();
 const axios = require("axios");
 const helperApiUrl = require("../constant").helperApiUrl;
 const financeApikey = process.env.financeApikey;
+
 exports.fetchQuote = (id) => {
   return axios.get(`${helperApiUrl}quote/${id}?apikey=${financeApikey}`);
 };
